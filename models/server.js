@@ -29,7 +29,7 @@ class Server {
         })
 
         this.app.put('/api', (req, res) => {
-            res.json({
+            res.status(500).json({ //controlando status
                 msg: "PUT Hola mundo"
             })
         })
