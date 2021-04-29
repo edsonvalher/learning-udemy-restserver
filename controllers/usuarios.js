@@ -6,17 +6,17 @@ const bcryptjs = require('bcryptjs')
 const Usuario = require('../models/usuario')
 
 
-const usuariosGet = (req = request, res = response) => {
-    const { q, nombre, apikey, page = 1, limit } = req.query //define el 1 como un valor por defecto como ejemplo
+const usuariosGet = async (req = request, res = response) => {
 
+    const { limite = 5, desde = 0 } = req.query;
+    const usuarios = await Usuario.find()
+        .skip(Number(desde))
+        .limit(Number(limite))
     res.json({
-        msg: "GET API - Controlador",
-        q,
-        nombre,
-        apikey,
-        page,
-        limit
+        usuarios
     })
+
+
 }
 
 const usuariosPost = async (req, res = response) => {
