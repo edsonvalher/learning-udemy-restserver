@@ -71,17 +71,23 @@ const usuariosPut = async (req, res = response) => {
         usuario
     })
 }
-const usuariosDelete = (req, res = response) => {
+const usuariosDelete = async (req, res = response) => {
+    const { id } = req.params
 
-    res.json({
-        msg: "DELETE API - Controlador"
-    })
+    //ESTE ES UN DELETE DEFINITIVO PERO ES MEJOR HACERLO LOGICO
+    //const usuario = await Usuario.findByIdAndDelete(id)
+    //res.json(usuario)
+    //DELETE LOGICO
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false })
+    res.json(usuario)
+
 }
 
 const usuariosPatch = (req, res = response) => {
 
+
     res.json({
-        msg: "PATCH API - Controlador"
+
     })
 }
 
