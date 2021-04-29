@@ -34,6 +34,10 @@ const UsuarioSchema = Schema({
 
     },
 })
-
+//con esto excluye los campos __v, password
+UsuarioSchema.methods.toJSON = function () {
+    const { __v, password, ...usuario } = this.toObject();
+    return usuario
+}
 
 module.exports = model('Usuario', UsuarioSchema)
