@@ -4,13 +4,20 @@ const { check } = require('express-validator')
 
 
 const { validarCampos } = require('../middlewares/validar-campos')
-const { esRoleValido, existeEmail } = require('../helper/db-validators')
+const { esRoleValido, existeEmail, existeUsuarioPorId } = require('../helper/db-validators')
 
 const router = Router()
 
 router.get('/', usuariosGet)
 
-router.put('/:id', usuariosPut)
+router.put('/:id',
+    [
+        check('id', 'No es un ID válido').isMongoId(),
+        check('correo', 'correo no valido').isEmail(),
+        check('id').custom(existeUsuarioPorId),
+        check('rol').custom((rol) => esRoleValido(rol)),
+        validarCampos
+    ], usuariosPut)
 
 //validacion de correo middleware
 router.post('/',

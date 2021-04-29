@@ -10,13 +10,22 @@ const esRoleValido = async (rol = '') => {
 }
 const existeEmail = async (correo) => {
     console.log(correo)
-    const buscar = await Usuario.findOne({ correo })
-    if (buscar) {
+    const existe = await Usuario.findOne({ correo })
+    if (existe) {
         throw new Error(`el correo ${correo} ya existe`)
+    }
+}
+
+const existeUsuarioPorId = async (id) => {
+    console.log(correo)
+    const existe = await Usuario.findById({ id })
+    if (!existe) {
+        throw new Error(`el ID ${ID} no existe`)
     }
 }
 
 module.exports = {
     esRoleValido,
-    existeEmail
+    existeEmail,
+    existeUsuarioPorId
 }

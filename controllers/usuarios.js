@@ -38,13 +38,22 @@ const usuariosPost = async (req, res = response) => {
         usuario
     })
 }
-const usuariosPut = (req, res = response) => {
+const usuariosPut = async (req, res = response) => {
 
     const id = req.params.id
+    //los campos anteriores a los puntos serán excluidos
+    const { _id, password, google, correo, ...resto } = req.body
+
+    //TODO validar con base de datos
+    if (password) {
+        //Encripta contraseña
+        const salt = bcryptjs.genSaltSync()
+        resto.password = bcryptjs.hashSync(password, salt)
+    }
+    const usuario = await Usuario.findByIdAndUpdate(id, resto)
 
     res.json({
-        msg: "PUT API - Controlador",
-        id
+        usuario
     })
 }
 const usuariosDelete = (req, res = response) => {
