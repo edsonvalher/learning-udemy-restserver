@@ -15,7 +15,6 @@ const validarJWT = async (req = request, res = response, next) => {
     try {
 
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY)
-
         const usuario = await Usuario.findById(uid)
         //agrego una propiedad uid dentro del request para que sea leida desde el controlador metodo delete
         //req.uid = uid
@@ -36,6 +35,7 @@ const validarJWT = async (req = request, res = response, next) => {
                 }
             )
         }
+        //esta propiedad estará disponible cuando estas validaciones estén correctas
         req.usuario = usuario
 
 
