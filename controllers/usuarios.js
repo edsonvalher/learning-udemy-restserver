@@ -81,11 +81,12 @@ const usuariosDelete = async (req, res = response) => {
 
     const usuario = await Usuario.findByIdAndUpdate(id, { estado: false })
     //obtengo la propiedad puesta desde el middleware vlaidar-jwt
-    const uid = req.uid
+    //const uid = req.uid
+    const usuarioautenticado = req.usuario
     res.json(
         {
             usuario,
-            uid
+            usuarioautenticado
         }
     )
 
