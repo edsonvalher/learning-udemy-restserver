@@ -31,7 +31,6 @@
 
             var id_token = googleUser.getAuthResponse().id_token;
             const data = { id_token }
-            console.log(id_token);
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
