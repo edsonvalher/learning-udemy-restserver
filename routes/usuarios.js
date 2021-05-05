@@ -2,11 +2,10 @@ const { Router } = require('express')
 const { check } = require('express-validator')
 const { usuariosGet, usuariosPost, usuariosPut, usuariosDelete, usuariosPatch } = require('../controllers/usuarios')
 
+//OPTIMIZANDO imports
+const { validarCampos, validarJWT, esAdminRole, tieneRole } = require('../middlewares')
 
-const { validarCampos } = require('../middlewares/validar-campos')
 const { esRoleValido, existeEmail, existeUsuarioPorId } = require('../helper/db-validators')
-const { validarJWT } = require('../middlewares/validar-jwt')
-const { esAdminRole, tieneRole } = require('../middlewares/validar-roles')
 
 const router = Router()
 
