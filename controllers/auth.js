@@ -1,4 +1,4 @@
-const { response } = require('express')
+const { response, request } = require('express')
 const Usuario = require('../models/usuario')
 const bcryptjs = require('bcryptjs')
 const { generarJWT } = require('../helper/generar-jwt')
@@ -7,7 +7,6 @@ const login = async (req, res = response) => {
 
     const { correo, password } = req.body
     const filtro = { estado: true }
-
     try {
         //verificar si el email existe
         //si el usuario está activo
@@ -19,7 +18,6 @@ const login = async (req, res = response) => {
                 }
             )
         }
-
         //verificar contraseña
         const validPassword = bcryptjs.compareSync(password, usuario.password);
         if (!validPassword) {
@@ -31,8 +29,6 @@ const login = async (req, res = response) => {
         }
         //generar jwt
         const token = await generarJWT(usuario.id)
-
-
         res.json({
             usuario,
             token
@@ -44,10 +40,23 @@ const login = async (req, res = response) => {
             msg: "algo salio mal"
         })
     }
+}
 
+const googleSignIn = (req = request, res = response) => {
+
+    const { id_token } = req.body
+
+
+    console.log(id_token)
+    res.json(
+        {
+            msg: "Todo ok!"
+        }
+    )
 
 }
 
 module.exports = {
-    login
+    login,
+    googleSignIn
 }
