@@ -63,12 +63,35 @@ const crearCategoria = async (req = request, res = response) => {
 }
 
 //actualizar categoria -- el otro nombre no debe existir
+const actualizarCategoria = async (req = request, res = response) => {
+    const { id } = req.params
 
+    const { estado, usuario, ...data } = req.body
+
+    data.nombre = data.nombre.toUpperCase()
+    data.usuario = req.usuario._id //dueño del token
+
+    const categoria = await Categoria.findByIdAndUpdate(id, data, { new: true }); //el new devuelve el nuevo registro
+
+    res.json(categoria)
+
+
+}
 //borrar categoria - borrado logico
+
+const borrarCategoria = async (req = request, res = response) => {
+    const { id } = req.params
+
+    const categoriaBorrada = await Categoria.findByIdAndUpdate(id, { estado: false }, { new: true })
+    res.json(categoriaBorrada)
+
+}
 
 
 module.exports = {
     crearCategoria,
     obtenerCategorias,
-    obtenerCategoria
+    obtenerCategoria,
+    actualizarCategoria,
+    borrarCategoria
 }

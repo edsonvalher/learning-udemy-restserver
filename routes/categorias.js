@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { check } = require('express-validator')
-const { validarJWT, validarCampos } = require('../middlewares')
-const { crearCategoria, obtenerCategorias, obtenerCategoria } = require('../controllers/categorias')
+const { validarJWT, validarCampos, esAdminRole } = require('../middlewares')
+const { crearCategoria, obtenerCategorias, obtenerCategoria, actualizarCategoria, borrarCategoria } = require('../controllers/categorias')
 const { existeCategoriaPorId } = require('../helper/db-validators')
 
 const router = Router()
@@ -23,23 +23,26 @@ router.post('/', [
 ], crearCategoria)
 
 //actualizar - privado- cualquiera con token valido
-router.put('/:id', (req, res) => {
-    res.json(
-        {
-            msg: 'put'
-        }
-    )
-})
+router.put('/:id', [
+    validarJWT,
+    check('nombre', 'el nombre es obligatorio').not().isEmpty(),
+    check('id').custom(existeCategoriaPorId),
+    validarCampos
+
+], actualizarCategoria)
 
 
 //borrar  - privado- solo si es admin con token valido
-router.delete('/:id', (req, res) => {
-    res.json(
-        {
-            msg: 'delete'
-        }
-    )
-})
+router.delete('/:id', [
+    validarJWT,
+    esAdminRole,
+    check('id', 'No es un id de Mongo válido').isMongoId(),
+    validarCampos,
+    check('id').custom(existeCategoriaPorId),
+
+
+
+], borrarCategoria)
 
 
 module.exports = router
