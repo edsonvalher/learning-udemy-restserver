@@ -49,7 +49,7 @@ const crearCategoria = async (req = request, res = response) => {
 
     const data = {
         nombre,
-        Categoria: req.Categoria._id
+        usuario: req.usuario._id
     }
     const categoria = new Categoria(data);
     await categoria.save()
