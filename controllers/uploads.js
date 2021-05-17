@@ -14,12 +14,19 @@ const cargarArchivo = async (req = request, res = response) => {
         res.status(400).json({ msg: 'No hay archivos en la petición' })
         return;
     }
-    const nombre = await subirArchivo(req.files)
-    res.json(
-        {
-            nombre
-        }
-    )
+
+    try {
+        const nombre = await subirArchivo(req.files, undefined, 'imgs') //undefined toma por defecto los argumentos establecidos jpg, png, etc
+        res.json(
+            {
+                nombre
+            }
+        )
+    } catch (msg) {
+        res.status(400).json({ msg })
+
+    }
+
 
 
 

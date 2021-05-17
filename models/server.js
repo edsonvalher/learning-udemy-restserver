@@ -50,7 +50,8 @@ class Server {
         //middleware para manejo de carga archivos
         this.app.use(fileUpload({
             useTempFiles: true,
-            tempFileDir: '/tmp/'
+            tempFileDir: '/tmp/',
+            createParentPath: true //con esta configuración se permite crear sub carpetas
         }));
 
 
