@@ -1,4 +1,5 @@
 
+const { dbConnection } = require('../database/config')
 const { Role, Usuario, Categoria, Producto } = require('../models')
 
 const esRoleValido = async (rol = '') => {
