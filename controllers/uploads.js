@@ -189,6 +189,11 @@ const actualizarImagenCloudinary = async (req = request, res = response) => {
     //limpiar imagenes previas
     if (modelo.img) {
         //borrar imagen de servidor cloud
+        const nombreArr = modelo.img.split('/')
+        const nombre = nombreArr[nombreArr.length - 1]
+
+        const [public_id] = nombre.split('.') //desestructuración por posición en el arreglo
+        claudinary.uploader.destroy(public_id) //se puede correr con await o sin await 
     }
     const { tempFilePath } = req.files.archivo
     const { secure_url } = await claudinary.uploader.upload(tempFilePath)
