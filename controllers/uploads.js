@@ -16,6 +16,30 @@ const cargarArchivo = (req = request, res = response) => {
 
     const { archivo } = req.files
 
+    //validar extensiones 
+
+    const nombreCortado = archivo.name.split('.') //coloca el nombre en un arreglo
+    const extension = nombreCortado[nombreCortado.length - 1] //la uiltima posición del arreglo 
+
+    //valida con las extensiones permitidas
+    const extensionesValidas = ['png', 'jpg', 'jpeg', 'gif']
+
+    if (!extensionesValidas.includes(extension)) {
+        res.status(400).json(
+            {
+                msg: `La extension ${extension} no es permitida, ${extensionesValidas}`
+            }
+        )
+    }
+
+
+    res.json(
+        {
+            msg: extension
+        }
+    )
+
+    /*
     const uploadPath = path.join(__dirname, '../uploads/', archivo.name)
 
     archivo.mv(uploadPath, (err) => {
@@ -33,6 +57,7 @@ const cargarArchivo = (req = request, res = response) => {
             }
         );
     });
+    */
 
 }
 
