@@ -1,4 +1,6 @@
 const path = require('path') //obtiene path de mi proyecto
+const { v4: uuidv4 } = require('uuid')
+
 const { response, request } = require('express');
 
 
@@ -33,14 +35,9 @@ const cargarArchivo = (req = request, res = response) => {
     }
 
 
-    res.json(
-        {
-            msg: extension
-        }
-    )
 
-    /*
-    const uploadPath = path.join(__dirname, '../uploads/', archivo.name)
+    const nombreTemp = `${uuidv4()}.${extension}`
+    const uploadPath = path.join(__dirname, '../uploads/', nombreTemp)
 
     archivo.mv(uploadPath, (err) => {
         if (err) {
@@ -57,7 +54,7 @@ const cargarArchivo = (req = request, res = response) => {
             }
         );
     });
-    */
+
 
 }
 
